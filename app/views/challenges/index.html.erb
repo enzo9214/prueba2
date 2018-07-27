@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Imageurl</th>
+      <th>Completed</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @challenges.each do |challenge| %>
+      <tr>
+        <td><%= link_to challenge.name, challenge_path(challenge)   %></td>
+        <td><%= challenge.imageurl %></td>
+        <% if user_signed_in? %>
+          <% if Userchallenge.find_by(user_id: current_user.id , challenge_id: challenge.id, completed: true) != nil %>
+            <td>Completado</td>
+          <% else %>  
+            <td>No Completado</td>
+          <% end %>  
+          <td><%= link_to 'Realizado', completed_path(challenge, true) %>
+        <% end %>  
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+<%= link_to 'New Challenge', new_challenge_path %>
