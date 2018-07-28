@@ -1,33 +1,31 @@
 <p id="notice"><%= notice %></p>
 
+<% @challenges.each_slice(3) do |slices| %>
+  <div class='container'>
+    <div class='row'>
+      <% slices.each do |challenge| %>
+        <div class="col-md-4">
+          <div class="card border-primary mb-3" style="width: 95%;">
+            <div class="card-body">
+              <h5 class="card-title text-center"><%= link_to challenge.name, challenge_path(challenge) %></h5>
+              <img class="card-img-top" src="<%= challenge.imageurl %>" alt="" width="100%">
+              <div class="my-3 text-center">
+                <% if user_signed_in? %>
+                  <% if Userchallenge.find_by(user_id: current_user.id , challenge_id: challenge.id, completed: true) != nil %>
+                    <a href="<%= completed_path(challenge) %>" class="btn btn-danger">No listo</a>
+                  <% else %>  
+                    <a href="<%= completed_path(challenge) %>" class="btn btn-success">Listo</a>
+                  <% end %>
+                <% end %>
+              </div>  
+            </div>
+          </div>
+        </div>  
+      <% end %>
+    </div>
+  </div>    
+<% end %>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Imageurl</th>
-      <th>Completed</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @challenges.each do |challenge| %>
-      <tr>
-        <td><%= link_to challenge.name, challenge_path(challenge)   %></td>
-        <td><%= challenge.imageurl %></td>
-        <% if user_signed_in? %>
-          <% if Userchallenge.find_by(user_id: current_user.id , challenge_id: challenge.id, completed: true) != nil %>
-            <td>Completado</td>
-          <% else %>  
-            <td>No Completado</td>
-          <% end %>  
-          <td><%= link_to 'Realizado', completed_path(challenge, true) %>
-        <% end %>  
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-
-<%= link_to 'New Challenge', new_challenge_path %>
+<div class="container">
+    <%= link_to 'New Challenge', new_challenge_path %>
+</div>

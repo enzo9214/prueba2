@@ -1,38 +1,29 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Ranking</strong>
-</p>
-<table class= 'table'>
-  <tbody>
-    <% @ranking.each do |ranking| %>
-      <tr>
-        <td> <%= User.find(ranking.user_id).email %></td>
-        <td> <%= ranking.created_at %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class='container'>
+  <p><strong>Ranking</strong></p>
+  <table class= 'table'>
+    <tbody>
+      <% @ranking.each do |ranking| %>
+        <tr>
+          <td> <%= User.find(ranking.user_id).email %></td>
+          <td> <%= ranking.created_at %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 
-<p>
-  <strong>Completados</strong>
-</p>
-<table class='table'>
-  <thead>
-    <tr>
-      <th>Usuario</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+  <p><strong>Completados</strong></p>
+  <table class='table'>
+    <tbody>
+      <% @completed.each do |completed| %>
+        <tr>
+          <td> <%= User.find(completed.user_id).email %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 
-  <tbody>
-    <% @completed.each do |completed| %>
-      <tr>
-        <td> <%= User.find(completed.user_id).email %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<%= link_to 'Edit', edit_challenge_path(@challenge) %> |
-<%= link_to 'Back', challenges_path %>
+  <%= link_to 'Edit', edit_challenge_path(@challenge) %> |
+  <%= link_to 'Back', challenges_path %>
+</div>
